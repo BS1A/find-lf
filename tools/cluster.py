@@ -374,14 +374,14 @@ def main(args, config):
         return
     elif command == "initialize":
         print("copying ips")
-        for address in config['pis']:
+        for pi in config['pis']:
             c = 'ssh-copy-id %(address)s'
-            r, code = run_command(c % {'address': address})
-            if code == 1:
-                print("Could not connect to %s" % address)
-                return
+            r, code = run_command(c % {'address': pi['address']})
             logger.debug(r)
             logger.debug(code)
+            if code == 1:
+                print("Could not connect to %s" % pi['address'])
+                return
 
     threads = []
     for pi in config['pis']:
